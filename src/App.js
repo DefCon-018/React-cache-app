@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import CacheBuster from "react-cache-buster";
+import packageInfo from "../package.json";
+// import Loading from "./loading";
+import Hello from "./Hello";
 
-function App() {
+const App = () => {
+  const isProduction = process.env.NODE_ENV === "production";
+  const version = packageInfo.version;
+  console.log("version", version);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CacheBuster
+      currentVersion={version}
+      isEnabled={isProduction} //If false, the library is disabled.
+      isVerboseMode={false} //If true, the library writes verbose logs to console.
+      //If not pass, nothing appears at the time of new version check.
+    >
+      <Hello />
+    </CacheBuster>
   );
-}
+};
 
 export default App;
